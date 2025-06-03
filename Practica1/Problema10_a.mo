@@ -8,7 +8,7 @@ algorithm
     th := pre(th)  + h*sin(pre(psi))*pre(v)/L; 
     v:= pre(v) + h*pre(a);
     psi:= pre(psi) + h*pre(w);
-    if time<2 then
+    if time<1 then
       a:=1;
       w:=0.1;
     else if time >= 2 then
