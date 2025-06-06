@@ -357,10 +357,10 @@ Coupled
                         }
                     Parameters
                         {
-                        Tmin = Val; 0 ; 
-                        Tmax = Val; 0.3 ; 
-                        Jmin = Val; 0.01 ; 
-                        Jmax = Val; 0.12 ; 
+                        jmin = Val; 0.02 ; 
+                        jmax = Val; 0.12 ; 
+                        tmin = Val; 0 ; 
+                        tmax = Val; 0.1 ; 
                         }
                     }
                 Atomic
@@ -497,7 +497,7 @@ Coupled
                         {
                         Inputs = Str; %Inputs ; Number of inputs
                         Format = Str; set xrange [0:%tf] @ set grid @ set title 'Rechazados' ; General Formatting (use @ as line break)
-                        Format1 = Str; with steps notitle ; Formatting options for input 1
+                        Format1 = Str; with impulses notitle ; Formatting options for input 1
                         Format2 = Str;  ; Formatting options for input 2
                         Format3 = Str;  ; Formatting options for input 3
                         Format4 = Str;  ; Formatting options for input 4
