@@ -1,0 +1,269 @@
+Root-Coordinator
+ {
+  Simulator
+   {
+    Path = mys/gen.h
+    Parameters = 2.000000e-02,1.200000e-01,0.000000e+00,5.000000e-02
+   }
+  Simulator
+   {
+    Path = sinks/gnuplot.h
+    Parameters = 1.000000e+00,"set xrange [0:%tf] @ set grid @ set xlabel 'Tiempo' @ set ylabel 'Probabilidad' @ set title 'Rechazados'","with impulses notitle","","","",""
+   }
+    Coordinator
+     {
+        Coordinator
+         {
+          Simulator
+           {
+            Path = sources/constant_sci.h
+            Parameters = "50"
+           }
+          Simulator
+           {
+            Path = qss/qss_wsum.h
+            Parameters = "1","-1","0","0","0","0","0","0",2.000000e+00
+           }
+          Simulator
+           {
+            Path = qss/qss_wsum.h
+            Parameters = "1","1","0","0","0","0","0","0",2.000000e+00
+           }
+          Simulator
+           {
+            Path = discrete\qoperator_sci.h
+            Parameters = "0","1"
+           }
+          Simulator
+           {
+            Path = sources/constant_sci.h
+            Parameters = "0.02"
+           }
+          Simulator
+           {
+            Path = sources/constant_sci.h
+            Parameters = "0.001"
+           }
+          Simulator
+           {
+            Path = qss/qss_nlfunction.h
+            Parameters = "u0 * u1 + u2 * u3",4.000000e+00
+           }
+          Simulator
+           {
+            Path = qss/qss_saturation.h
+            Parameters = "0","1"
+           }
+          EIC
+           {
+            (0,0);(1,1)
+           }
+          EOC
+           {
+            (7,0);(0,0)
+           }
+          IC
+           {
+            (0,0);(1,0)
+            (2,0);(3,0)
+            (6,0);(7,0)
+            (4,0);(6,0)
+            (5,0);(6,2)
+            (1,0);(6,1)
+            (1,0);(2,1)
+            (3,0);(6,3)
+            (3,0);(2,0)
+           }
+         }
+      Simulator
+       {
+        Path = mys/proc.h
+        Parameters = 
+       }
+      Simulator
+       {
+        Path = mys/cola.h
+        Parameters = 
+       }
+      Simulator
+       {
+        Path = mys/sensor.h
+        Parameters = 
+       }
+      Simulator
+       {
+        Path = mys/filtro.h
+        Parameters = 
+       }
+      Simulator
+       {
+        Path = mys/muestreador.h
+        Parameters = 1.000000e+00
+       }
+      Simulator
+       {
+        Path = sinks/gnuplot.h
+        Parameters = 1.000000e+00,"set xrange [0:%tf] @ set grid @ set title 'Muestreador1'","with steps notitle","","","",""
+       }
+      Simulator
+       {
+        Path = sinks/gnuplot.h
+        Parameters = 1.000000e+00,"set xrange [0:%tf] @ set grid @ set title 'Controlador1'","with impulses notitle'","","","",""
+       }
+      EIC
+       {
+        (0,0);(4,0)
+       }
+      EOC
+       {
+        (4,1);(0,0)
+       }
+      IC
+       {
+        (1,0);(2,1)
+        (3,0);(5,0)
+        (2,0);(3,1)
+        (2,0);(1,0)
+        (4,0);(3,0)
+        (4,0);(2,0)
+        (5,0);(6,0)
+        (5,0);(0,0)
+        (0,0);(7,0)
+        (0,0);(4,1)
+       }
+     }
+    Coordinator
+     {
+        Coordinator
+         {
+          Simulator
+           {
+            Path = sources/constant_sci.h
+            Parameters = "50"
+           }
+          Simulator
+           {
+            Path = qss/qss_wsum.h
+            Parameters = "1","-1","0","0","0","0","0","0",2.000000e+00
+           }
+          Simulator
+           {
+            Path = qss/qss_wsum.h
+            Parameters = "1","1","0","0","0","0","0","0",2.000000e+00
+           }
+          Simulator
+           {
+            Path = discrete\qoperator_sci.h
+            Parameters = "0","1"
+           }
+          Simulator
+           {
+            Path = sources/constant_sci.h
+            Parameters = "0.02"
+           }
+          Simulator
+           {
+            Path = sources/constant_sci.h
+            Parameters = "0.001"
+           }
+          Simulator
+           {
+            Path = qss/qss_nlfunction.h
+            Parameters = "u0 * u1 + u2 * u3",4.000000e+00
+           }
+          Simulator
+           {
+            Path = qss/qss_saturation.h
+            Parameters = "0","1"
+           }
+          EIC
+           {
+            (0,0);(1,1)
+           }
+          EOC
+           {
+            (7,0);(0,0)
+           }
+          IC
+           {
+            (0,0);(1,0)
+            (2,0);(3,0)
+            (6,0);(7,0)
+            (4,0);(6,0)
+            (5,0);(6,2)
+            (1,0);(6,1)
+            (1,0);(2,1)
+            (3,0);(6,3)
+            (3,0);(2,0)
+           }
+         }
+      Simulator
+       {
+        Path = mys/proc.h
+        Parameters = 
+       }
+      Simulator
+       {
+        Path = mys/cola.h
+        Parameters = 
+       }
+      Simulator
+       {
+        Path = mys/sensor.h
+        Parameters = 
+       }
+      Simulator
+       {
+        Path = mys/filtro.h
+        Parameters = 
+       }
+      Simulator
+       {
+        Path = mys/muestreador.h
+        Parameters = 1.000000e+00
+       }
+      Simulator
+       {
+        Path = sinks/gnuplot.h
+        Parameters = 1.000000e+00,"set xrange [0:%tf] @ set grid @ set title 'Muestreador2'","with steps notitle","","","",""
+       }
+      Simulator
+       {
+        Path = sinks/gnuplot.h
+        Parameters = 1.000000e+00,"set xrange [0:%tf] @ set grid @ set title 'Controlador2'","with impulses notitle'","","","",""
+       }
+      EIC
+       {
+        (0,0);(4,0)
+       }
+      EOC
+       {
+        (4,1);(0,0)
+       }
+      IC
+       {
+        (1,0);(2,1)
+        (3,0);(5,0)
+        (2,0);(3,1)
+        (2,0);(1,0)
+        (4,0);(3,0)
+        (4,0);(2,0)
+        (5,0);(6,0)
+        (5,0);(0,0)
+        (0,0);(7,0)
+        (0,0);(4,1)
+       }
+     }
+  EIC
+   {
+   }
+  EOC
+   {
+   }
+  IC
+   {
+    (0,0);(2,0)
+    (2,0);(3,0)
+    (3,0);(1,0)
+   }
+ }
