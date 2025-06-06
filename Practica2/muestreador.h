@@ -16,8 +16,6 @@ class muestreador: public Simulator {
 double sigma, y;
 double last;
 double T;
-
-#define INF 1e20
 public:
 	muestreador(const char *n): Simulator(n) {};
 	void init(double, ...);

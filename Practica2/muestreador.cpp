@@ -9,7 +9,8 @@ va_start(parameters,t);
 //	%Type% is the parameter type
 
 T = va_arg(parameters, double);
-sigma = 0;
+sigma = T;
+last = 0;
 }
 double muestreador::ta(double t) {
 //This function returns a double.
