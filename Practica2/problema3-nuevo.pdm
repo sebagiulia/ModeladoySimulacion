@@ -35,7 +35,7 @@ Coupled
             Parameters
                 {
                 jmin = Val; 0.02 ; 
-                jmax = Val; 0.1 ; 
+                jmax = Val; 0.12 ; 
                 tmin = Val; 0 ; 
                 tmax = Val; 0.1 ; 
                 }
