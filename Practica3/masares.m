@@ -10,7 +10,3 @@ end
 # masares([0.5;1.5])
 # masares([0.5;1.5], 1)
 # masares([0.5;1.5], 10)
-  
-#Para correrlo:
-#  [t,x]=feuler(@masares,[0;0],0,10,0.1);
-#  plot(t,x)
