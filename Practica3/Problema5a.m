@@ -10,5 +10,6 @@ function [error, xa, xfe] = Problema5a(h)
   t = [0:h:tf];
   xa = ltiSolve(A,B,u,x0,t);
   [tfe,xfe]=feuler(@masares,x0,0,tf,h);
+  plot(t,xa,tfe,xfe)
   error = norm(xfe(:,2)-xa(:,2),1);
 end
