@@ -21,13 +21,13 @@ package PumpingSystem
       Placement(transformation(origin = {-82, -2}, extent = {{-12, -12}, {12, 12}}, rotation = -90)));
     DSFLib.Mechanical.Rotational.Components.ConstTorque constTorque annotation(
       Placement(transformation(origin = {-58, -2}, extent = {{-14, -14}, {14, 14}})));
-    DSFLib.Mechanical.Rotational.Components.Inertia inertia annotation(
+    DSFLib.Mechanical.Rotational.Components.Inertia inertia(J = 1) annotation(
       Placement(transformation(origin = {-14, 56}, extent = {{-12, -12}, {12, 12}})));
     SliderCrank sliderCrank annotation(
       Placement(transformation(origin = {-8, -2}, extent = {{-12, -12}, {12, 12}})));
     DSFLib.Mechanical.Translational.Components.Mass mass annotation(
       Placement(transformation(origin = {26, -2}, extent = {{-12, -12}, {12, 12}})));
-    DSFLib.Mechanical.Translational.Components.Damper damper annotation(
+    DSFLib.Mechanical.Translational.Components.Damper damper(b = 1) annotation(
       Placement(transformation(origin = {58, -2}, extent = {{-12, -12}, {12, 12}})));
     DSFLib.Mechanical.Translational.Components.Fixed fixed1 annotation(
       Placement(transformation(origin = {82, -2}, extent = {{-12, -12}, {12, 12}}, rotation = 90)));
@@ -50,13 +50,13 @@ package PumpingSystem
     extends DSFLib.Hydraulics.Interfaces.TwoPort;
     parameter Real Ron = 1e-6, Roff = 1e12;
   equation
-    p = if q > 0 then Ron * q else Roff * q;
+    p = if q > 0 then Ron*q else Roff*q;
     annotation(
       Icon(graphics = {Polygon(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Text(origin = {0, 14}, textColor = {0, 0, 255}, extent = {{-150, 90}, {150, 50}}, textString = "%name"), Text(origin = {2, -18}, extent = {{-144, -34}, {144, -68}}, textString = "RH=%RH")}, coordinateSystem(initialScale = 0.1, extent = {{-100, -100}, {100, 100}})));
   end OneWayValve;
 
   model ModeloPrueba2
-    DSFLib.Hydraulics.Components.Tank tank annotation(
+    DSFLib.Hydraulics.Components.Tank tank(v(start = 1)) annotation(
       Placement(transformation(origin = {0, 72}, extent = {{-12, -12}, {12, 12}})));
     DSFLib.Hydraulics.Components.Valve valve annotation(
       Placement(transformation(origin = {0, 28}, extent = {{-12, -12}, {12, 12}}, rotation = -90)));
@@ -69,13 +69,72 @@ package PumpingSystem
   equation
     connect(tank.fluidPort, valve.fluidPort_b) annotation(
       Line(points = {{0, 60}, {0, 40}}));
-  connect(valve.fluidPort_a, oneWayValve1.fluidPort_b) annotation(
+    connect(valve.fluidPort_a, oneWayValve1.fluidPort_b) annotation(
       Line(points = {{0, 16}, {0, -10}, {30, -10}}));
-  connect(oneWayValve.fluidPort_a, oneWayValve1.fluidPort_b) annotation(
-      Line(points = {{-28, -10}, {30, -10}}));
-  connect(constPress.fluidPort, oneWayValve.fluidPort_b) annotation(
+    connect(constPress.fluidPort, oneWayValve.fluidPort_b) annotation(
       Line(points = {{-72, -50}, {-64, -50}, {-64, -10}, {-52, -10}}));
-  connect(constPress.fluidPort, oneWayValve1.fluidPort_a) annotation(
+    connect(constPress.fluidPort, oneWayValve1.fluidPort_a) annotation(
       Line(points = {{-72, -50}, {70, -50}, {70, -10}, {52, -10}}));
+    connect(oneWayValve.fluidPort_a, valve.fluidPort_a) annotation(
+      Line(points = {{-28, -10}, {0, -10}, {0, 16}}));
   end ModeloPrueba2;
+
+  model BombaHidraulica
+    DSFLib.Hydraulics.Interfaces.FluidPort fluidPort_a annotation(
+      Placement(transformation(origin = {90, -1}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {86, -21}, extent = {{-16, -16}, {16, 16}})));
+    DSFLib.Mechanical.Rotational.Interfaces.Flange flange annotation(
+      Placement(transformation(origin = {1, 90}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-1, 86}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
+    DSFLib.Hydraulics.Interfaces.FluidPort fluidPort_b annotation(
+      Placement(transformation(origin = {-92, 1}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-86, -23}, extent = {{-16, -16}, {16, 16}})));
+  SliderCrank sliderCrank annotation(
+      Placement(transformation(origin = {2, 50}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  OneWayValve oneWayValve1 annotation(
+      Placement(transformation(origin = {-48, 4}, extent = {{-10, -10}, {10, 10}})));
+  OneWayValve oneWayValve2 annotation(
+      Placement(transformation(origin = {38, 2}, extent = {{-10, -10}, {10, 10}})));
+  DSFLib.MultiDomain.HydroMechanical.Components.PistonCylinder pistonCylinder annotation(
+      Placement(transformation(origin = {2, 6}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+    equation
+    connect(sliderCrank.flangeR, flange) annotation(
+      Line(points = {{2, 50}, {2, 90}}));
+  connect(oneWayValve1.fluidPort_b, fluidPort_b) annotation(
+      Line(points = {{-58, 4}, {-92, 4}, {-92, 2}}));
+  connect(oneWayValve2.fluidPort_a, fluidPort_a) annotation(
+      Line(points = {{48, 2}, {90, 2}, {90, 0}}));
+  connect(pistonCylinder.flange_b, sliderCrank.flangeT) annotation(
+      Line(points = {{2, 16}, {2, 40}}));
+  connect(pistonCylinder.fluidPort, oneWayValve2.fluidPort_b) annotation(
+      Line(points = {{10, 2}, {28, 2}}));
+    annotation(
+      Diagram(graphics),
+      Icon(graphics = {Text(origin = {71, 73}, rotation = 180, extent = {{-181, 18}, {131, -21}}, textString = "Q=%Q"), Polygon(fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.HorizontalCylinder, points = {{-28, 30}, {-28, -30}, {50, -2}, {-28, 30}}), Rectangle(origin = {0, -24}, fillColor = {0, 127, 255}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 32}, {100, -32}}), Ellipse(origin = {0, -24}, fillColor = {26, 182, 199}, fillPattern = FillPattern.Sphere, extent = {{-80, 80}, {80, -80}}), Polygon(origin = {9, -27}, fillColor = {0, 170, 255}, fillPattern = FillPattern.Solid, points = {{-33, 51}, {49, 1}, {-33, -43}, {-33, 49}, {-33, 51}}), Text(origin = {0, -200}, textColor = {0, 0, 255}, extent = {{-150, 90}, {150, 50}}, textString = "%name"), Rectangle(origin = {-65, 113}, rotation = 90, fillColor = {238, 238, 238}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-83, -49}, {-23, -77}})}));
+  end BombaHidraulica;
+
+  model ModeloPrueba3
+    DSFLib.Mechanical.Rotational.Components.Inertia inertia annotation(
+      Placement(transformation(origin = {-16, 50}, extent = {{-10, -10}, {10, 10}})));
+    DSFLib.Mechanical.Rotational.Components.Fixed fixed annotation(
+      Placement(transformation(origin = {-66, 8}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    DSFLib.Mechanical.Rotational.Components.ConstTorque constTorque annotation(
+      Placement(transformation(origin = {-40, 8}, extent = {{-10, -10}, {10, 10}})));
+    DSFLib.Hydraulics.Components.ConstPress constPress annotation(
+      Placement(transformation(origin = {-38, -42}, extent = {{-10, -10}, {10, 10}})));
+    DSFLib.Hydraulics.Components.Valve valve annotation(
+      Placement(transformation(origin = {30, 50}, extent = {{-10, -10}, {10, 10}})));
+    BombaHidraulica bombaHidraulica annotation(
+      Placement(transformation(origin = {-8, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  equation
+  connect(constPress.fluidPort, valve.fluidPort_a) annotation(
+      Line(points = {{-28, -42}, {60, -42}, {60, 50}, {40, 50}}));
+  connect(valve.fluidPort_b, bombaHidraulica.fluidPort_a) annotation(
+      Line(points = {{20, 50}, {-6, 50}, {-6, 17}}));
+  connect(constPress.fluidPort, bombaHidraulica.fluidPort_b) annotation(
+      Line(points = {{-28, -42}, {-6, -42}, {-6, -1}}));
+  connect(bombaHidraulica.flange, constTorque.flange_b) annotation(
+      Line(points = {{-16, 8}, {-30, 8}}));
+  connect(fixed.flange, constTorque.flange_a) annotation(
+      Line(points = {{-66, 8}, {-50, 8}}));
+  connect(inertia.flange, constTorque.flange_b) annotation(
+      Line(points = {{-26, 50}, {-30, 50}, {-30, 8}}));
+  end ModeloPrueba3;
 end PumpingSystem;
