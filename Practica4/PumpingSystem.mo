@@ -83,28 +83,34 @@ package PumpingSystem
     DSFLib.Hydraulics.Interfaces.FluidPort fluidPort_a annotation(
       Placement(transformation(origin = {90, -1}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {86, -21}, extent = {{-16, -16}, {16, 16}})));
     DSFLib.Mechanical.Rotational.Interfaces.Flange flange annotation(
-      Placement(transformation(origin = {1, 90}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-1, 86}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
+      Placement(transformation(origin = {-1, 90}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-1, 86}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
     DSFLib.Hydraulics.Interfaces.FluidPort fluidPort_b annotation(
       Placement(transformation(origin = {-92, 1}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-86, -23}, extent = {{-16, -16}, {16, 16}})));
   SliderCrank sliderCrank annotation(
-      Placement(transformation(origin = {2, 50}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+      Placement(transformation(origin = {0, 50}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   OneWayValve oneWayValve1 annotation(
-      Placement(transformation(origin = {-48, 4}, extent = {{-10, -10}, {10, 10}})));
+      Placement(transformation(origin = {-44, 28}, extent = {{-10, -10}, {10, 10}})));
   OneWayValve oneWayValve2 annotation(
       Placement(transformation(origin = {38, 2}, extent = {{-10, -10}, {10, 10}})));
-  DSFLib.MultiDomain.HydroMechanical.Components.PistonCylinder pistonCylinder annotation(
-      Placement(transformation(origin = {2, 6}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  DSFLib.Mechanical.Translational.Components.Fixed fixed annotation(
+      Placement(transformation(origin = {0, -20}, extent = {{-10, -10}, {10, 10}})));
+  DSFLib.MultiDomain.HydroMechanical.Components.PistonCylinder pistonCylinder(A = 0.01)  annotation(
+      Placement(transformation(origin = {0, 6}, extent = {{10, 10}, {-10, -10}}, rotation = -90)));
     equation
     connect(sliderCrank.flangeR, flange) annotation(
-      Line(points = {{2, 50}, {2, 90}}));
-  connect(oneWayValve1.fluidPort_b, fluidPort_b) annotation(
-      Line(points = {{-58, 4}, {-92, 4}, {-92, 2}}));
-  connect(oneWayValve2.fluidPort_a, fluidPort_a) annotation(
+      Line(points = {{0, 50}, {0, 90}}));
+    connect(oneWayValve1.fluidPort_b, fluidPort_b) annotation(
+      Line(points = {{-54, 28}, {-92, 28}, {-92, 2}}));
+    connect(oneWayValve2.fluidPort_a, fluidPort_a) annotation(
       Line(points = {{48, 2}, {90, 2}, {90, 0}}));
   connect(pistonCylinder.flange_b, sliderCrank.flangeT) annotation(
-      Line(points = {{2, 16}, {2, 40}}));
+      Line(points = {{0, 16}, {0, 40}}));
+  connect(pistonCylinder.flange_a, fixed.flange) annotation(
+      Line(points = {{0, -4}, {0, -20}}));
   connect(pistonCylinder.fluidPort, oneWayValve2.fluidPort_b) annotation(
-      Line(points = {{10, 2}, {28, 2}}));
+      Line(points = {{8, 2}, {28, 2}}));
+  connect(oneWayValve1.fluidPort_a, pistonCylinder.fluidPort) annotation(
+      Line(points = {{-34, 28}, {8, 28}, {8, 2}}));
     annotation(
       Diagram(graphics),
       Icon(graphics = {Text(origin = {71, 73}, rotation = 180, extent = {{-181, 18}, {131, -21}}, textString = "Q=%Q"), Polygon(fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.HorizontalCylinder, points = {{-28, 30}, {-28, -30}, {50, -2}, {-28, 30}}), Rectangle(origin = {0, -24}, fillColor = {0, 127, 255}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 32}, {100, -32}}), Ellipse(origin = {0, -24}, fillColor = {26, 182, 199}, fillPattern = FillPattern.Sphere, extent = {{-80, 80}, {80, -80}}), Polygon(origin = {9, -27}, fillColor = {0, 170, 255}, fillPattern = FillPattern.Solid, points = {{-33, 51}, {49, 1}, {-33, -43}, {-33, 49}, {-33, 51}}), Text(origin = {0, -200}, textColor = {0, 0, 255}, extent = {{-150, 90}, {150, 50}}, textString = "%name"), Rectangle(origin = {-65, 113}, rotation = 90, fillColor = {238, 238, 238}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-83, -49}, {-23, -77}})}));
