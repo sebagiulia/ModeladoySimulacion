@@ -143,4 +143,40 @@ package PumpingSystem
   connect(inertia.flange, constTorque.flange_b) annotation(
       Line(points = {{-26, 50}, {-30, 50}, {-30, 8}}));
   end ModeloPrueba3;
+
+  model ModeloPrueba4
+  BombaHidraulica bombaHidraulica annotation(
+      Placement(transformation(origin = {-26, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  DSFLib.MultiDomain.ElectroMechanical.Components.DCMotor dCMotor(R = 0.1, L = 0.001, Km = 1, Jm = 1)  annotation(
+      Placement(transformation(origin = {-72, 12}, extent = {{-16, -16}, {16, 16}})));
+  DSFLib.Circuits.Components.ConstVolt constVolt(V = 6)  annotation(
+      Placement(transformation(origin = {-72, 64}, extent = {{10, 10}, {-10, -10}})));
+  DSFLib.Hydraulics.Components.Valve valve(RH = 10000000)  annotation(
+      Placement(transformation(origin = {48, 66}, extent = {{-10, -10}, {10, 10}})));
+  DSFLib.Hydraulics.Components.Column column annotation(
+      Placement(transformation(origin = {-24, 56}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  DSFLib.Hydraulics.Components.Tank tank annotation(
+      Placement(transformation(origin = {2, 84}, extent = {{-10, -10}, {10, 10}})));
+  DSFLib.Hydraulics.Components.Tank tank1 annotation(
+      Placement(transformation(origin = {8, -52}, extent = {{-10, -10}, {10, 10}})));
+  DSFLib.Hydraulics.Components.Column column1 annotation(
+      Placement(transformation(origin = {-24, -26}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  equation
+    connect(dCMotor.flange, bombaHidraulica.flange) annotation(
+      Line(points = {{-58, 10}, {-35, 10}}));
+    connect(dCMotor.n, constVolt.n) annotation(
+      Line(points = {{-82, 28}, {-82, 64}}));
+    connect(dCMotor.p, constVolt.p) annotation(
+      Line(points = {{-62, 28}, {-62, 64}}));
+    connect(column.fluidPort_a, bombaHidraulica.fluidPort_a) annotation(
+      Line(points = {{-24, 46}, {-24, 18}}));
+    connect(tank.fluidPort, valve.fluidPort_b) annotation(
+      Line(points = {{2, 74}, {2, 66}, {38, 66}}));
+    connect(column.fluidPort_b, tank.fluidPort) annotation(
+      Line(points = {{-24, 66}, {2, 66}, {2, 74}}));
+    connect(bombaHidraulica.fluidPort_b, column1.fluidPort_b) annotation(
+      Line(points = {{-24, 2}, {-24, -16}}));
+    connect(column1.fluidPort_a, tank1.fluidPort) annotation(
+      Line(points = {{-24, -36}, {-24, -70}, {8, -70}, {8, -62}}));
+  end ModeloPrueba4;
 end PumpingSystem;
